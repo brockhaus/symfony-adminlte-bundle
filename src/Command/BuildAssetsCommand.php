@@ -119,7 +119,9 @@ class BuildAssetsCommand extends Command
             foreach ($files as $name => $file) {
                 $file_path = \is_file($file) ? $file : \realpath($this->package . $file);
                 $file_name = \is_string($name) ? $name : \basename($file_path);
-                $this->filesystem->copy($file_path, $sub_dir . DIRECTORY_SEPARATOR . $file_name);
+                if ($this->filesystem->exists($file_path)) {
+                    $this->filesystem->copy($file_path, $sub_dir . DIRECTORY_SEPARATOR . $file_name);
+                }
             }
         }
     }
